@@ -37,9 +37,9 @@ test("parseSearchQuery removes unsupported operators from the free-text query", 
 	assert.deepEqual(parsed, { query: "roadmap" });
 });
 
-test("parseSearchQuery leaves unmatched text in the query", () => {
+test("parseSearchQuery ignores malformed dates and strips matched operators", () => {
 	const parsed = parseSearchQuery('hello before:not-a-date from:"');
 
-	assert.equal(parsed.query, 'hello from:"');
+	assert.equal(parsed.query, "hello");
 	assert.equal(parsed.date_end, undefined);
 });
