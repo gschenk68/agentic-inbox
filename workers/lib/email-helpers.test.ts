@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import assert from "node:assert/strict";
 import test from "node:test";
 
@@ -158,7 +160,11 @@ test("HTML helper functions escape and sanitize quoted content", () => {
 		body: '<script>alert(1)</script><p>Hello <b>team</b></p>',
 	});
 
-	assert.match(quoted, new RegExp(`On ${formatEmailDate("2026-04-15T15:42:00.000Z").replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&")}, &lt;Admin &quot;Ops&quot;&gt; wrote:`));
+	assert.ok(
+		quoted.includes(
+			`On ${formatEmailDate("2026-04-15T15:42:00.000Z")}, &lt;Admin &quot;Ops&quot;&gt; wrote:`,
+		),
+	);
 	assert.ok(!quoted.includes("<script>"));
 	assert.ok(quoted.includes("Hello team"));
 });

@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import assert from "node:assert/strict";
 import test from "node:test";
 
@@ -37,7 +39,7 @@ test("storeAttachments sanitizes filenames, stores bytes, and returns metadata",
 
 	assert.equal(puts.length, 1);
 	assert.equal(puts[0].key, "attachments/email-1/attachment-1/inva_lid__name_.txt");
-	assert.equal(Buffer.from(puts[0].bytes).toString("utf8"), "Hello");
+	assert.equal(new TextDecoder().decode(puts[0].bytes), "Hello");
 	assert.deepEqual(stored, {
 		id: "attachment-1",
 		email_id: "email-1",
